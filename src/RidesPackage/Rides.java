@@ -17,46 +17,46 @@ public abstract class Rides {
 	 /** 
 	  * starting point of the ride : GPS coordinate {latitude,longitude}
 	  */
-	protected double[] startPoint;
+	private double[] startPoint;
 	
 	/**
 	 * destination point of the ride : GPS coordinate in form {latitude,longitude}
 	 */
-	protected double[] destPoint;
+	private double[] destPoint;
 	
 	/**
 	 * customer taking the ride
 	 */
-	protected Customer cust;
+	private Customer cust;
 	
 	/**
 	 * driver of the ride
 	 */
-	protected Driver driver;
+	private Driver driver;
 	
 	/**
 	 * car used for the ride
 	 */
-	protected Cars car;
+	private Cars car;
 	
 	/**
 	 * state of the ride
 	 */
-	protected String state;
+	private String state;
 	
 	/**
 	 * start date of the ride
 	 */
-	protected Date startDate;
+	private Date startDate;
 	
 	/**
 	 * end date of the ride
 	 */
-	protected Date endDate;
+	private Date endDate;
 	/**
 	 * state of traffic during the ride
 	 */
-	protected String traffic;
+	private String traffic;
 	/**
 	 * total number of rides
 	 */
@@ -221,6 +221,37 @@ public abstract class Rides {
 	public void setCust(Customer cust) {
 		this.cust = cust;
 	}
+	/** get driver
+	 * @return : driver of the ride
+	 */
+	public Driver getDriver() {
+		return driver;
+	}
+
+	/**
+	 * set driver
+	 * @param driver : new driver of the ride
+	 */
+	public void setDriver(Driver driver) {
+		this.driver = driver;
+	}
+
+	/**
+	 * get car
+	 * @return : car of the ride
+	 */
+	public Cars getCar() {
+		return car;
+	}
+
+	/**
+	 * set car
+	 * @param car : new car of the ride
+	 */
+	public void setCar(Cars car) {
+		this.car = car;
+	}
+
 	/**
 	 * get the state of the ride
 	 * @return current state of the ride
@@ -235,6 +266,54 @@ public abstract class Rides {
 	public void setState(String state) {
 		this.state = state;
 	}
+	/**
+	 * get startDate
+	 * @return startDate : start date of the ride
+	 */
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	/**
+	 * set startDate
+	 * @param startDate : new start date of the ride
+	 */
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	/**
+	 * get endDate
+	 * @return endDate : end date of the ride
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * set endDate
+	 * @param endDate : new end date of the ride
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	/**
+	 * get traffic
+	 * @return : traffic during the ride
+	 */
+	public String getTraffic() {
+		return traffic;
+	}
+
+	/**
+	 * set traffic
+	 * @param traffic : new traffic during the ride
+	 */
+	public void setTraffic(String traffic) {
+		this.traffic = traffic;
+	}
+
 	/**
 	 * get countAllRides
 	 * @return countAllRides : total number of rides

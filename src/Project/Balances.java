@@ -18,6 +18,9 @@ public class Balances {
 		// number of rides
 		int countRide = 0;
 		for (Rides ride : Rides.rideList) {
+			if (ride.getDriver().getDriverID()==driver.getDriverID() && ride.getStartDate().compareTo(start)>0 && ride.getEndDate().compareTo(end)<0) {
+				countRide+=1;
+			}
 		}
 		
 		// money cashed
@@ -35,6 +38,8 @@ public class Balances {
 		double rate2 = 1;
 		if (timeOnARide+timeOnDuty+timeOffDuty==0) {throw new ArithmeticException("Division by zero");}
 		else {rate2 = (timeOnARide+timeOnDuty)/(timeOnARide+timeOnDuty+timeOffDuty);}
+		
+		System.out.println("Number of rides over this interval time = "+countRide+", money cashed by the driver = "+countMoney+", on-duty rate of driving = "+rate1+"activity rate = "+rate2);
 	}
 	
 	public static void systemBalance() {

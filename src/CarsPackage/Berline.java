@@ -24,8 +24,7 @@ public class Berline extends Cars {
 	public Berline(ArrayList<Driver> owners, int nbSeats, String carID, double[] coordGPS) {
 		super(owners, nbSeats, carID, coordGPS);
 	}
-	
-	//coucoooooouuuuuuuuuu
+
 
 	@Override
 	void setupCars(int n) {
