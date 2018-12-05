@@ -3,6 +3,7 @@ package CarsPackage;
 
 import java.util.ArrayList;
 
+import Project.ClientApp;
 import Project.Driver;
 
 /**
@@ -11,7 +12,7 @@ import Project.Driver;
  */
 
 public class Van extends Cars {
-	protected static int incr =0;
+	protected static Integer incr =0;
 	
 	// CONSTRUCTOR :
 	/**
@@ -24,6 +25,15 @@ public class Van extends Cars {
 	public Van(ArrayList<Driver> owners, int nbSeats, String carID, double[] coordGPS) {
 		super(owners, nbSeats, carID, coordGPS);
 	}
-	
+
+	// METHODS :
+	public static void setupCars(int n) {
+		for(int i=0;i<n;i++) {
+			incr+=1;
+			ArrayList<Driver> owner = new ArrayList<Driver>();
+			owner.add(new Driver("driver"+i+"name","driver"+i+"surname"));
+			new Van(owner,6,"Van"+incr.toString(),ClientApp.randomcoord());
+		}
+	}
 
 }

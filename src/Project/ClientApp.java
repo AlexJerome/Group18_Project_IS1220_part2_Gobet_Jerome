@@ -1,6 +1,14 @@
 package Project;
 
 import java.util.Scanner;
+
+import CarsPackage.Berline;
+import CarsPackage.Cars;
+import CarsPackage.CarsFactory;
+import CarsPackage.Standard;
+import CarsPackage.Van;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.time.LocalTime;
 
@@ -25,14 +33,57 @@ public class ClientApp {
 	}
 	
 	/**
-	 * 
-	 * @param nStandardCars
-	 * @param nBerlinCars
-	 * @param nVanCars
-	 * @param nCustomers
+	 * create Standard Cars, Berline cars and Van cars
+	 * @param nStandardCars nb of standard cars to create
+	 * @param nBerlinCars nb of berlin cars to create
+	 * @param nVanCars number of van cars to create
+	 * @param nCustomers number of customer to create
 	 */
-	public void setup( int nStandardCars, int nBerlinCars,int nVanCars,int nCustomers) {
-	
+	public static void setup( int nStandardCars, int nBerlinCars,int nVanCars,int nCustomers) {
+		Standard.setupCars(nStandardCars);
+		Berline.setupCars(nBerlinCars);
+		Van.setupCars(nVanCars);
+		Customer.setupCustomers(nCustomers);
+	}
+	/**
+	 * creation of a customer
+	 * @param customerName : name of the customer
+	 * @param customerSurname : surname of the customer
+	 * @return list of current customers
+	 */
+	public static ArrayList<Customer> addCustomer(String customerName,String customerSurname) {
+		new Customer(customerName,customerSurname,randomcoord(),48114548);
+		return Customer.customerList;
+	}
+	//TODO : peut etre que le retour doit etre un print plutot qu'un return... ?
+	/**
+	 * creation of a driver and a car for this new driver
+	 * @param driverName : driver name
+	 * @param driverSurname : driver surname
+	 * @param carType : typer of new car of the driver
+	 * @return list of current drivers
+	 */
+	public static ArrayList<Driver> addCarDriver(String driverName,String driverSurname,String carType){
+		ArrayList<Driver> owners = new ArrayList<Driver>();
+		owners.add(new Driver(driverName,driverSurname));
+		Cars car = CarsFactory.createCar(carType, owners, randomcoord());	
+		return(Driver.driverList);
+	}
+	/**
+	 * creation of a driver and add it to the list of drivers of a car with carID
+	 * @param driverName : name of the driver
+	 * @param driverSurname : surname of the driver
+	 * @param carID : carID of the car
+	 * @return curret list of cars
+	 */
+	public static ArrayList<Driver> addDriver(String driverName,String driverSurname,String carID) {
+		Driver driver = new Driver(driverName,driverSurname);
+		for(Cars car : Cars.CarList) {
+			if(car.getCarID().contentEquals(carID)) {
+				car.getOwners().add(driver);
+			}
+		}
+		return(Driver.driverList);
 	}
 	
 	@SuppressWarnings("deprecation")

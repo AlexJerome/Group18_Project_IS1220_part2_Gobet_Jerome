@@ -46,10 +46,6 @@ public abstract class Cars {
 		CarList.add(this);
 	}
 	
-	// METHOD :
-	abstract void setupCars(int n);
-	
-	
 	// GETTERS AND SETTERS :
 	/**
 	 * get owners
