@@ -11,6 +11,7 @@ import Project.Driver;
  */
 
 public class Standard extends Cars {
+	protected static int incr =0 ;
 	
 	// CONSTRUCTOR :
 	/**

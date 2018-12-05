@@ -47,8 +47,7 @@ public abstract class Cars {
 	}
 	
 	// METHOD :
-	public static abstract void setupCars(int n);
-	//coucou
+	abstract void setupCars(int n);
 	
 	
 	// GETTERS AND SETTERS :

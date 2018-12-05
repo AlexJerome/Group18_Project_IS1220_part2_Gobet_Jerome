@@ -11,6 +11,7 @@ import Project.Driver;
  */
 
 public class Berline extends Cars {
+	protected static Integer incr =0;
 	
 	// CONSTRUCTOR :
 	/**
@@ -22,6 +23,14 @@ public class Berline extends Cars {
 	 */
 	public Berline(ArrayList<Driver> owners, int nbSeats, String carID, double[] coordGPS) {
 		super(owners, nbSeats, carID, coordGPS);
+	}
+
+	@Override
+	void setupCars(int n) {
+		for(int i=0;i<n;i++) {
+			incr+=1;
+			new Berline(new ArrayList<Driver>([new Driver("driver"+i+"name","driver"+i+"surname"])),4,"Standard"+incr.toString())
+		}
 	}
 }
 
