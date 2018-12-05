@@ -3,6 +3,7 @@ package CarsPackage;
 
 import java.util.ArrayList;
 
+import Project.ClientApp;
 import Project.Driver;
 
 /**
@@ -25,12 +26,13 @@ public class Berline extends Cars {
 		super(owners, nbSeats, carID, coordGPS);
 	}
 
-
-	@Override
-	void setupCars(int n) {
+	// METHOD :
+	public static void setupCars(int n) {
 		for(int i=0;i<n;i++) {
 			incr+=1;
-			new Berline(new ArrayList<Driver>([new Driver("driver"+i+"name","driver"+i+"surname"])),4,"Standard"+incr.toString())
+			ArrayList<Driver> owner = new ArrayList<Driver>();
+			owner.add(new Driver("driver"+i+"name","driver"+i+"surname"));
+			new Berline(owner,4,"Berline"+incr.toString(),ClientApp.randomcoord());
 		}
 	}
 }
