@@ -1,7 +1,6 @@
 package Project;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 /**
  * class representing drivers (people who can drive cars)

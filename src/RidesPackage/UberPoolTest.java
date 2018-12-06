@@ -23,7 +23,7 @@ class UberPoolTest {
 		double startPoint[] = {8.29,43.01};
 		double destPoint[] = {8.43,42.93};
 		UberPool uberPool = new UberPool(startPoint,destPoint,customer,"unconfirmed","low");
-		assertEquals(uberPool.getClass().toString(),"class Project.UberPool");
+		assertEquals(uberPool.getClass().toString(),"class RidesPackage.UberPool");
 	}
 
 	/**

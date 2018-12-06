@@ -23,7 +23,7 @@ class UberVanTest {
 		double startPoint[] = {8.29,43.01};
 		double destPoint[] = {8.43,42.93};
 		UberVan uberVan = new UberVan(startPoint,destPoint,customer,"unconfirmed","low");
-		assertEquals(uberVan.getClass().toString(),"class Project.UberVan");
+		assertEquals(uberVan.getClass().toString(),"class RidesPackage.UberVan");
 	}
 
 	/**

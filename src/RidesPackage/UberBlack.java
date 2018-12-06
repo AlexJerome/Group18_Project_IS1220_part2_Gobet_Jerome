@@ -1,7 +1,5 @@
 package RidesPackage;
 
-import java.util.Scanner;
-
 import CarsPackage.Berline;
 import CarsPackage.Cars;
 import Project.Customer;
@@ -43,6 +41,11 @@ public class UberBlack extends Rides {
 		return(Rides.trafficRate(traffic, trafficRates)*length*Rides.basicRate(length, basicRates));
 	}
 	
+	/**
+	 * find a Driver and a Car which belongs to the request and are available
+	 * @return driver,car
+	 * @throws NoDriverAvailable
+	 */
 	public static Object[] findDriver () throws NoDriverAvailable {
 		if (Cars.carList.size()==0) {
 			throw new NoDriverAvailable("No Car available for your UberBlack ride");

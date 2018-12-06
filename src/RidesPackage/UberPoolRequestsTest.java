@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 
 class UberPoolRequestsTest {
 
+	/**
+	 * test closest neighbors
+	 */
 	@Test
 	void testClosestNeighbors() {
 		double c[] = {0,0};
@@ -24,6 +27,9 @@ class UberPoolRequestsTest {
 		assertEquals(rank,2);
 	}
 	
+	/**
+	 * test distance of pick up drop off trajectory
+	 */
 	@Test
 	void testPickUpDropOff() {
 		double c[] = {0,0};

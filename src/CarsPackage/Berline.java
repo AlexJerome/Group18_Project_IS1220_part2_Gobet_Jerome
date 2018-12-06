@@ -28,7 +28,7 @@ public class Berline extends Cars {
 
 	// METHOD :
 	/**
-	 * create n cars of type Berline, with 
+	 * create n cars of type Berline, with a new driver for each one
 	 * @param n : number of Berline cars to be created
 	 */
 	public static void setupCars(int n) {

@@ -51,7 +51,7 @@ public class Customer {
 	/**
 	 * incrementation to give each customer a unique ID
 	 */
-	private static Integer incr = 0;
+	public static Integer incr = 0;
 	/**
 	 * list of customers
 	 */
@@ -80,6 +80,10 @@ public class Customer {
 	}
 	
 	//METHODS :
+	/**
+	 * create n customers
+	 * @param nCustomers
+	 */
 	public static void setupCustomers(int nCustomers) {
 		for(int i =0; i<nCustomers; i++) {
 			new Customer("customer"+incr+"name","customer"+incr+"surname",ClientApp.randomcoord(),7896589);
@@ -209,13 +213,7 @@ public class Customer {
 	public void setCountPrice(double countPrice) {
 		this.countPrice = countPrice;
 	}
-	/**
-	 * get incr
-	 * @return incr : number of customers
-	 */
-	public static int getIncr() {
-		return incr;
-	}
+	
 
 	//TOSTRING :
 	/* (non-Javadoc)

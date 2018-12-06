@@ -14,12 +14,12 @@ import RidesPackage.Rides;
 import RidesPackage.RidesFactory;
 import RidesPackage.UberBlack;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
-import java.time.LocalTime;
 
 /**
  * @author mariongobet
@@ -230,7 +230,7 @@ public class ClientApp {
 			int[] place = UberPoolRequests.addRequest(customer, customer.getCoordGPS(), destination);
 			int i = place[0];
 			int j = place[1];
-			if (i == 0 || i==1) {
+			if (j == 0 || j==1) {
 				String display = "Please wait a moment, we are looking for another customer to travel with you in this UberPool ride";
 				return display;
 			}
@@ -319,7 +319,7 @@ public class ClientApp {
 			int[] place = UberPoolRequests.addRequest(customer, customer.getCoordGPS(), destination);
 			int i = place[0];
 			int j = place[1];
-			if (i == 0 || i==1) {
+			if (j == 0 || j==1) {
 				String display = "Please wait a moment, we are looking for another customer to travel with you in this UberPool ride";
 				return display;
 			}
@@ -411,6 +411,9 @@ public class ClientApp {
 	 */
 	public static double totalCashed() {
 		return(Stats.totalAmountCharged());
+	}
+	
+	public static void main(String[] args) {
 	}
 }
 

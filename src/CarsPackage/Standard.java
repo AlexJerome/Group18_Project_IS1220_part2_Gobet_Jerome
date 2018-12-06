@@ -29,7 +29,7 @@ public class Standard extends Cars {
 	//METHOD :
 
 	/**
-	 * create n cars of type Standard, creating a new driver for each car
+	 * create n cars of type Standard, with a new driver for each one
 	 * @param n : number of cars to be created
 	 */
 	public static void setupCars(int n) {

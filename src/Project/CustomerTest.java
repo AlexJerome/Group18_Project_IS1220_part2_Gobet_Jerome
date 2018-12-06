@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import CarsPackage.Berline;
+
 /**
  * @author mariongobet
  *
@@ -25,6 +27,17 @@ class CustomerTest {
 		assertEquals(customer.getClass().toString(),"class Project.Customer"); 
 	}
 
+	/**
+	 * Test if after set up, 10 customers have been created
+	 */
+	@Test
+	public void testSetUpCustomer() {
+		int nbInit = Customer.incr;
+		Customer.setupCustomers(10);
+		int nbFin = Customer.incr;
+		assertEquals(nbInit+10,nbFin);
+	}
+	
 	/**
 	 * Test getter for name
 	 */
@@ -74,7 +87,7 @@ class CustomerTest {
 	public void testGetCustID() {
 		double coordGPS[] = {4.703,9.239};
 		Customer customer = new Customer("Jack","Jacky",coordGPS,320971093142937l);
-		assertEquals(customer.getCustID().toString(),"Customer"+Integer.toString(Customer.getIncr()));
+		assertEquals(customer.getCustID().toString(),"Customer"+Integer.toString(Customer.incr));
 	}
 
 	/**

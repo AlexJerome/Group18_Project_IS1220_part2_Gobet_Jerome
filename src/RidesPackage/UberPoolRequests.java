@@ -12,10 +12,15 @@ import Project.Driver;
 
 /**
  * @author mariongobet
- *
+ * class which represents the pool Request (maximum 3 requests)
  */
 public class UberPoolRequests {
 	
+	/**
+	 * 
+	 * @author mariongobet
+	 * nested class which respresents an individual request
+	 */
 	static class Request {
 		private Customer customer;
 		private double[] startPoint;
@@ -26,19 +31,45 @@ public class UberPoolRequests {
 			this.destPoint = destPoint;
 		}
 	}
-	
+	/**
+	 * request 1
+	 */
 	private Request request1;
+	/**
+	 * request 2
+	 */
 	private Request request2;
+	/**
+	 * request 3
+	 */
 	private Request request3;
+	/**
+	 * number of request which arrived
+	 */
 	private int nbRequest;
 	
+	/**
+	 * list with all the poolRequest
+	 */
 	public static ArrayList<UberPoolRequests> requestList= new ArrayList<UberPoolRequests>();
 	
+	/**
+	 * Constructor
+	 * @param request1
+	 */
 	public UberPoolRequests (Request request1) {
 		this.request1 = request1;
 		this.nbRequest=1;
 	}
 	
+	/**
+	 * from a customer request, add a request to an existing poolRequest if not full,
+	 * or to a new poolRequest if all of the others are full
+	 * @param customer
+	 * @param startPoint
+	 * @param destPoint
+	 * @return the rank of the pool request in the array list (int i, int j between 0 and 2)
+	 */
 	public static int[] addRequest(Customer customer, double[] startPoint, double[] destPoint) {
 		Request request = new Request(customer,startPoint,destPoint);
 		int[] result = new int[] {0,0};
@@ -77,6 +108,12 @@ public class UberPoolRequests {
 		return result;
 	}
 	
+	/**
+	 * from a point c and a list of points, return the rank of the closest neighbor
+	 * @param c
+	 * @param neighbors
+	 * @return rank of the closest neighbor
+	 */
 	public static int closestNeighbor(double[] c, ArrayList<double[]> neighbors) {
 		int i = 0;
 		double min = Rides.length(c,neighbors.get(i));
@@ -92,6 +129,17 @@ public class UberPoolRequests {
 		return rank;
 	}
 	
+	/**
+	 * compute the minimal distance of the Pick Up Drop Off trajectory
+	 * @param c
+	 * @param p1
+	 * @param p2
+	 * @param p3
+	 * @param d1
+	 * @param d2
+	 * @param d3
+	 * @return optimized distance
+	 */
 	public static double pickUpDropOff (double[] c, double[] p1, double[] p2, double[] p3, double[] d1, double[] d2, double[] d3) {
 		double totalLength = 0;
 		ArrayList<double[]> neighbors = new ArrayList<double[]>();
@@ -118,7 +166,12 @@ public class UberPoolRequests {
 		return totalLength;
 	}
 
-		
+	/**
+	 * from a full poolRequest (3 requests), find a driver and a car which are available and belongs to request,
+	 * beginning with the closest car
+	 * @param u
+	 * @return driver, car
+	 */
 	public static Object[] fromRequestFindDriver(UberPoolRequests u) {
 		double p1[] = u.getRequest1().startPoint;
 		double d1[] = u.getRequest1().destPoint;

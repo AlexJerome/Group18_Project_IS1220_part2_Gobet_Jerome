@@ -19,6 +19,7 @@ class DriverTest {
 		assertEquals(driver.getClass().toString(),"class Project.Driver");
 	}
 	
+	
 	/**
 	 * Test if setupDrivers create the exact number of drivers
 	 */
