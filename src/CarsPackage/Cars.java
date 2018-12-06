@@ -29,7 +29,7 @@ public abstract class Cars {
 	/**
 	 * list of cars
 	 */
-	public static ArrayList<Cars> CarList = new ArrayList<Cars>();
+	public static ArrayList<Cars> carList = new ArrayList<Cars>();
 	
 	// CONSTRUCTOR :
 	/**
@@ -44,7 +44,7 @@ public abstract class Cars {
 		this.nbSeats = nbSeats;
 		this.carID = carID;
 		this.coordGPS = coordGPS;
-		CarList.add(this);
+		carList.add(this);
 	}
 	
 	// GETTERS AND SETTERS :
@@ -116,7 +116,7 @@ public abstract class Cars {
 	 */
 	public static String displayCars() {
 		String display = "List of cars : \n";
-		for(Cars car: CarList) {
+		for(Cars car: carList) {
 			display += car.toString()+"\n";
 		}
 		return(display);
