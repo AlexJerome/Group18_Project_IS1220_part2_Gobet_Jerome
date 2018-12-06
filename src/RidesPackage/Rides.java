@@ -59,15 +59,6 @@ public abstract class Rides {
 	 * state of traffic during the ride
 	 */
 	private String traffic;
-	/**
-	 * total number of rides
-	 */
-	public static int countAllRides = 0;
-	
-	/**
-	 * total amount of charges
-	 */
-	public static double countAllPrices = 0.0;
 	
 	/**
 	 * list of rides
@@ -89,7 +80,7 @@ public abstract class Rides {
 		this.cust = cust;
 		this.state = state;
 		this.traffic = traffic;
-		countAllRides += 1;
+		RidesFactory.incr += 1;
 		rideList.add(this);
 	}
 	

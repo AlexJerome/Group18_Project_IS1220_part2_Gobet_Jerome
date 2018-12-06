@@ -30,9 +30,9 @@ class CarsFactoryTest {
 		Cars berline = CarsFactory.createCar(carTypeBerline,owners,coordGPS);
 		Cars standard = CarsFactory.createCar(carTypeStandard,owners,coordGPS);
 		Cars van = CarsFactory.createCar(carTypeVan,owners,coordGPS);
-		assertEquals(berline.getClass().toString(),"class Project.Berline");
-		assertEquals(standard.getClass().toString(),"class Project.Standard");
-		assertEquals(van.getClass().toString(),"class Project.Van");
+		assertEquals(berline.getClass().toString(),"class CarsPackage.Berline");
+		assertEquals(standard.getClass().toString(),"class CarsPackage.Standard");
+		assertEquals(van.getClass().toString(),"class CarsPackage.Van");
 		assertEquals(berline.getNbSeats(),4);
 		assertEquals(standard.getNbSeats(),4);
 		assertEquals(van.getNbSeats(),6);

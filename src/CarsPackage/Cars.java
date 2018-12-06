@@ -110,6 +110,7 @@ public abstract class Cars {
 		return " [owners=" + owners + ", nbSeats=" + nbSeats + ", carID=" + carID + ", coordGPS="
 				+ Arrays.toString(coordGPS) + "]";
 	}
+	
 	/**
 	 * display state of all current cars
 	 * @return : string with all information about the cars
