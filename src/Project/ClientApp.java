@@ -7,6 +7,7 @@ import CarsPackage.Cars;
 import CarsPackage.CarsFactory;
 import CarsPackage.Standard;
 import CarsPackage.Van;
+import RidesPackage.Rides;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,9 +52,9 @@ public class ClientApp {
 	 * @param customerSurname : surname of the customer
 	 * @return list of current customers
 	 */
-	public static ArrayList<Customer> addCustomer(String customerName,String customerSurname) {
+	public static String addCustomer(String customerName,String customerSurname) {
 		new Customer(customerName,customerSurname,randomcoord(),48114548);
-		return Customer.customerList;
+		return Customer.displayCustomers();
 	}
 	//TODO : peut etre que le retour doit etre un print plutot qu'un return... ?
 	/**
@@ -61,29 +62,29 @@ public class ClientApp {
 	 * @param driverName : driver name
 	 * @param driverSurname : driver surname
 	 * @param carType : typer of new car of the driver
-	 * @return list of current drivers
+	 * @return list of current drivers and cars
 	 */
-	public static ArrayList<Driver> addCarDriver(String driverName,String driverSurname,String carType){
+	public static String addCarDriver(String driverName,String driverSurname,String carType){
 		ArrayList<Driver> owners = new ArrayList<Driver>();
 		owners.add(new Driver(driverName,driverSurname));
 		CarsFactory.createCar(carType, owners, randomcoord());	
-		return(Driver.driverList);
+		return(Driver.displayDrivers() + Cars.displayCars());
 	}
 	/**
 	 * creation of a driver and add it to the list of drivers of a car with carID
 	 * @param driverName : name of the driver
 	 * @param driverSurname : surname of the driver
 	 * @param carID : carID of the car
-	 * @return curret list of cars
+	 * @return current list of cars and drivers
 	 */
-	public static ArrayList<Driver> addDriver(String driverName,String driverSurname,String carID) {
+	public static String addDriver(String driverName,String driverSurname,String carID) {
 		Driver driver = new Driver(driverName,driverSurname);
 		for(Cars car : Cars.CarList) {
 			if(car.getCarID().contentEquals(carID)) {
 				car.getOwners().add(driver);
 			}
 		}
-		return(Driver.driverList);
+		return(Driver.displayDrivers()+Cars.displayCars());
 	}
 	/**
 	 * set the status of a driver with given surname and name to status
@@ -92,13 +93,13 @@ public class ClientApp {
 	 * @param status : new state of the driver
 	 * @return list of drivers
 	 */
-	public static ArrayList<Driver> setDriverStatus(String driverName, String driverSurname,String status){
+	public static String setDriverStatus(String driverName, String driverSurname,String status){
 		for(Driver driver: Driver.driverList) {
 			if(driver.getName().equals(driverName) && driver.getSurname().contentEquals(driverSurname)) {
 				driver.setState(status);
 			}
 		}
-		return(Driver.driverList);
+		return(Driver.displayDrivers());
 	}
 	
 	/**
@@ -115,7 +116,7 @@ public class ClientApp {
 				car.setCoordGPS(coord);
 			}
 		}
-		return(Cars.CarList);
+		return(Cars.displayCars());
 	}
 	/**
 	 * move customer with given Id to a given place
@@ -124,15 +125,26 @@ public class ClientApp {
 	 * @param yPos : y value of the new position of the car
 	 * @return list of current customer
 	 */
-	public static ArrayList<Customer> moveCustomer(String custID,double xPos,double yPos){
+	public static String moveCustomer(String custID,double xPos,double yPos){
 		for(Customer cust: Customer.customerList) {
 			if(cust.getCustID().contentEquals(custID)) {
 				double[] coord = {xPos,yPos};
 				cust.setCoordGPS(coord);
 			}
 		}
-		return(Customer.customerList);
+		return(Customer.displayCustomers());
 	}
+	
+	/**
+	 * display state of all the system
+	 */
+	public static void display() {
+		System.out.println(Driver.displayDrivers());
+		System.out.println(Customer.displayCustomers());
+		System.out.println(Cars.displayCars());
+		System.out.println(Rides.displayRides());
+	}
+	
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		/*
@@ -234,7 +246,7 @@ public class ClientApp {
 		
 		Driver driver = new Driver ("John","Johnny");
 		System.out.println("His name is "+driver.getName()+", and his surname is "+driver.getSurname());
-		*/
+		
 		Date aujourdhui = new Date();
 		System.out.println(aujourdhui.getHours());
 		System.out.println(aujourdhui.getMinutes());
@@ -244,6 +256,7 @@ public class ClientApp {
 		int min = (int)((duration-hour*3600)/60);
 		int sec = (int)((duration-hour*3600-min*60));
 		System.out.println(hour+" "+min+" "+sec);
+		*/
 	}
 }
 

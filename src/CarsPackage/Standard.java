@@ -28,11 +28,15 @@ public class Standard extends Cars {
 	
 	//METHOD :
 
+	/**
+	 * create n cars of type Standard, creating a new driver for each car
+	 * @param n : number of cars to be created
+	 */
 	public static void setupCars(int n) {
 		for(int i=0;i<n;i++) {
 			incr+=1;
 			ArrayList<Driver> owner = new ArrayList<Driver>();
-			owner.add(new Driver("driver"+i+"name","driver"+i+"surname"));
+			owner.add(new Driver("driver"+Driver.getIncr()+"name","driver"+Driver.getIncr()+"surname"));
 			new Standard(owner,4,"Standard"+incr.toString(),ClientApp.randomcoord());
 		}
 	}

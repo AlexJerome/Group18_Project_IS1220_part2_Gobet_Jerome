@@ -115,7 +115,7 @@ public abstract class Cars {
 	 * @return : string with all information about the cars
 	 */
 	public static String displayCars() {
-		String display = "";
+		String display = "List of cars : \n";
 		for(Cars car: CarList) {
 			display += car.toString()+"\n";
 		}
