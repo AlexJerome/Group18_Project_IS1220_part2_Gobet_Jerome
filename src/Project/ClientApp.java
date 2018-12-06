@@ -13,7 +13,9 @@ import RidesPackage.Rides;
 import RidesPackage.RidesFactory;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.time.LocalTime;
 
 /**
@@ -148,9 +150,26 @@ public class ClientApp {
 		System.out.println(Rides.displayRides());
 	}
 	
-	public static void ask4price(String customerID, double[] destination,Date time) {
-		String trafficState = RidesFactory.stateOfTraffic(time.getHours());
-		
+	/**
+	 * calculates the price of a given ride with different types of ride
+	 * @param customerID : ID of the customer who asks for a ride
+	 * @param destination : destination point wanted
+	 * @param time : time of the ride
+	 * @return a string which displays all the prices for all the kinds of rides
+	 */
+	public static String ask4price(String customerID, double[] destination,GregorianCalendar time) {
+		String trafficState = RidesFactory.stateOfTraffic(time.get(Calendar.HOUR_OF_DAY));
+		double[] startpoint = new double[2];
+		for(Customer cust: Customer.customerList) {
+			if(cust.getCustID().contentEquals(customerID)) {
+				startpoint = cust.getCoordGPS();
+			}
+		}
+		double length = Rides.length(startpoint,destination);
+		double[] prices = RidesFactory.evaluatePrices(trafficState, length);
+		String display = "List of prices :  \n UberX :"+prices[0]+", UberBlack :"+prices[1]+
+				", UberPool :"+prices[2]+", UberVan :"+prices[3];
+		return(display);
 	}
 	
 	@SuppressWarnings("deprecation")
