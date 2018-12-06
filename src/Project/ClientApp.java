@@ -86,6 +86,10 @@ public class ClientApp {
 		return(Driver.driverList);
 	}
 	
+	public static ArrayList<Driver> setDriverStatus(String driverName, String driverSurname,String status){
+		for(Driver driver)
+	}
+	
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		/*
