@@ -1,6 +1,9 @@
 package RidesPackage;
 
+import java.util.Scanner;
+
 import Project.Customer;
+import Project.Driver;
 
 /**
  * class representing the type of ride UberBlack
@@ -36,6 +39,25 @@ public class UberBlack extends Rides {
 	 */
 	public static double evaluatePrice(String traffic, double length) {
 		return(Rides.trafficRate(traffic, trafficRates)*length*Rides.basicRate(length, basicRates));
+	}
+	
+	public Driver findDriver (double[] startPoint, double[] destPoint) throws NoDriverAvailable {
+		Scanner sc = new Scanner(System.in);
+		if (Driver.driverList.size()==0) {
+			throw new NoDriverAvailable("No Driver available for your UberBlack ride");
+		}
+		else {
+			for (Driver driver : Driver.driverList) {
+				if (driver.getState().equals("on-duty")){
+					System.out.println("Do you want to drive a passenger from "+startPoint+" to "+destPoint+"? (yes/no)");
+					String answer = sc.nextLine();
+					if (answer.equals("yes")) {
+						return driver;
+					}
+				}
+			}
+		throw new NoDriverAvailable("None of drivers accepted your UberBlack ride");
+		}
 	}
 	
 	//TOSTRING :
