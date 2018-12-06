@@ -412,5 +412,6 @@ public class ClientApp {
 	public static double totalCashed() {
 		return(Stats.totalAmountCharged());
 	}
+	
 }
 
