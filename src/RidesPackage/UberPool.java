@@ -1,6 +1,11 @@
 package RidesPackage;
 
+import java.util.Scanner;
+
+import CarsPackage.Berline;
+import CarsPackage.Cars;
 import Project.Customer;
+import Project.Driver;
 
 /**
  * class representing the UberPool type of ride
@@ -38,7 +43,8 @@ public class UberPool extends Rides {
 	public static double evaluatePrice(String traffic, double length) {
 		return(Rides.trafficRate(traffic, trafficRates)*length*Rides.basicRate(length, basicRates));
 	}
-
+	
+	
 	//TOSTRING :
 	@Override
 	public String toString() {
