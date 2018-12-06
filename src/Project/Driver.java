@@ -39,6 +39,11 @@ public class Driver {
 	private int countMoney;
 	
 	/**
+	 * appreciation of the driver (note)
+	 */
+	private double appreciation;
+	
+	/**
 	 * time spent offline
 	 */
 	private double timeOffline;
@@ -168,6 +173,22 @@ public class Driver {
 	 */
 	public void setCountMoney(int countMoney) {
 		this.countMoney = countMoney;
+	}
+
+	/**
+	 * get appreciation
+	 * @return : appreciation of the driver
+	 */
+	public double getAppreciation() {
+		return appreciation;
+	}
+
+	/**
+	 * set appreciation
+	 * @param : new appreciation of the driver (evolves after each ride)
+	 */
+	public void setAppreciation(double appreciation) {
+		this.appreciation = appreciation;
 	}
 
 	/**
