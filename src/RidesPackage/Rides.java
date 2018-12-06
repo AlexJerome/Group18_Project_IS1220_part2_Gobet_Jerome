@@ -112,11 +112,8 @@ public abstract class Rides {
 	 * @return lgth : length of the ride in kilometers (as the crow flies)
 	 */
 	public static double length(double[] startPoint, double[] destPoint) {
-		double x1 = Math.toRadians(startPoint[0]);
-		double y1 = Math.toRadians(startPoint[1]);
-		double x2 = Math.toRadians(destPoint[0]);
-		double y2 = Math.toRadians(destPoint[1]);
-		double lgth = Math.acos(Math.sin(x1)*Math.sin(x2)+Math.cos(x1)*Math.cos(x2)*Math.cos(y2-y1))*6371;
+		double lgth = Math.sqrt(Math.pow(destPoint[0]-startPoint[0],2)+Math.pow(destPoint[1]-startPoint[1],2));
+		// Math.acos(Math.sin(x1)*Math.sin(x2)+Math.cos(x1)*Math.cos(x2)*Math.cos(y2-y1))*6371;
 		return lgth;
 	}
 	
