@@ -21,6 +21,17 @@ class StandardTest {
 		owners.add(driver);
 		double coordGPS[] = {4.09,41.9}; 
 		Standard standard = new Standard (owners,4,"Standard1",coordGPS);
-	    assertEquals(standard.getClass().toString(),"class Project.Standard"); 
+	    assertEquals(standard.getClass().toString(),"class CarsPackage.Standard"); 
+	}
+	
+	/**
+	 * Test if 12 Standard cars have been created
+	 */
+	@Test
+	public void testSetUpCars() {
+		int nbInit = Standard.incr;
+		Standard.setupCars(12);
+		int nbFin = Standard.incr;
+		assertEquals(nbInit+12,nbFin);
 	}
 }
