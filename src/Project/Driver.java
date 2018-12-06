@@ -2,6 +2,7 @@ package Project;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 /**
  * class representing drivers (people who can drive cars)
  * @author mariongobet
@@ -66,7 +67,7 @@ public class Driver {
 	/**
 	 * date of the last time that the Driver changed his state (for example from offline to on-duty)
 	 */
-	private Date dateChangeState;
+	private GregorianCalendar dateChangeState;
 
 	/**
 	 * list of drivers 
@@ -87,6 +88,7 @@ public class Driver {
 		this.driverID = "Driver" + Integer.toString(incr);
 		this.state = "offline";
 		driverList.add(this);
+		this.dateChangeState = (GregorianCalendar) GregorianCalendar.getInstance();
 	}
 	
 	/**
@@ -259,7 +261,7 @@ public class Driver {
 	 * get dateChangeState
 	 * @return dateChangeState : date of the last change of the driver's state
 	 */
-	public Date getDateChangeState() {
+	public GregorianCalendar getDateChangeState() {
 		return dateChangeState;
 	}
 
@@ -267,7 +269,7 @@ public class Driver {
 	 * set dateChangeState
 	 * @param dateChangeState : new date of the change of the driver's state (generally modified with the actual date when the driver changes his state)
 	 */
-	public void setDateChangeState(Date dateChangeState) {
+	public void setDateChangeState(GregorianCalendar dateChangeState) {
 		this.dateChangeState = dateChangeState;
 	}
 

@@ -61,7 +61,7 @@ public class ClientApp {
 		new Customer(customerName,customerSurname,randomcoord(),48114548);
 		return Customer.displayCustomers();
 	}
-	//TODO : peut etre que le retour doit etre un print plutot qu'un return... ?
+
 	/**
 	 * creation of a driver and a car for this new driver
 	 * @param driverName : driver name
@@ -101,7 +101,20 @@ public class ClientApp {
 	public static String setDriverStatus(String driverName, String driverSurname,String status){
 		for(Driver driver: Driver.driverList) {
 			if(driver.getName().equals(driverName) && driver.getSurname().contentEquals(driverSurname)) {
+				String lastState = driver.getState();
 				driver.setState(status);
+				GregorianCalendar timeLastChange = driver.getDateChangeState();
+				GregorianCalendar timenow = (GregorianCalendar) GregorianCalendar.getInstance();
+				driver.setDateChangeState(timenow);
+				long timeA = timeLastChange.getTimeInMillis();
+				long timeB = timenow.getTimeInMillis();
+				long time = timeB - timeA;
+				switch(lastState) {
+				case("offline"): driver.setTimeOffline(driver.getTimeOffline()+time); break;
+				case("offduty") : driver.setTimeOffDuty(driver.getTimeOffDuty()+time); break;
+				case("onduty") : driver.setTimeOnDuty(driver.getTimeOnDuty()+time); break;
+				case("onaride") : driver.setTimeOnARide(driver.getTimeOnARide()+time); break;
+				}
 			}
 		}
 		return(Driver.displayDrivers());
@@ -178,6 +191,49 @@ public class ClientApp {
 		String display = "List of prices :  \n UberX :"+prices[0]+", UberBlack :"+prices[1]+
 				", UberPool :"+prices[2]+", UberVan :"+prices[3];
 		return(display);
+	}
+	
+	/**
+	 * to display the drivers in the myUber system in increasing 
+	 * order w.r.t. to the sorting policy 
+	 * @param sortpolicy : either mostappreciated or most occuppied
+	 */
+	public static void displayDrivers(String sortpolicy) {
+		switch(sortpolicy){
+		case("mostappreciated") :{
+			Stats.mostAppreciatedDriver();
+			break;
+		}
+		case("mostoccupied") :{
+			Stats.leastOccupiedDriver();
+			break;
+		}
+		}
+	}
+	
+	/**
+	 *  to display the customers in the myUber system in increasing order w.r.t. to the sorting policy
+	 * @param sortpolicy : either mostfrequent, or mostcharged
+	 */
+	public static void displayCustomers(String sortpolicy) {
+		switch(sortpolicy) {
+		case("mostfrequent"):{
+			Stats.mostFrequentCustomer();
+			break;
+		}
+		case("mostcharged"):{
+			Stats.mostChargedCustomer();
+			break;
+		}
+		}
+	}
+	
+	/**
+	 * total amount cashed by all drivers
+	 * @return total amount
+	 */
+	public static double totalCashed() {
+		return(Stats.totalAmountCharged());
 	}
 	
 	@SuppressWarnings("deprecation")
