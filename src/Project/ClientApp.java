@@ -202,7 +202,7 @@ public class ClientApp {
 		int min = (int)((duration-hour*3600)/60);
 		int sec = (int)((duration-hour*3600-min*60));
 		System.out.println(hour+" "+min+" "+sec);
-		
+	
 	}
 }
 
