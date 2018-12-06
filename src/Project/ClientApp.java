@@ -84,7 +84,7 @@ public class ClientApp {
 	 */
 	public static String addDriver(String driverName,String driverSurname,String carID) {
 		Driver driver = new Driver(driverName,driverSurname);
-		for(Cars car : Cars.CarList) {
+		for(Cars car : Cars.carList) {
 			if(car.getCarID().contentEquals(carID)) {
 				car.getOwners().add(driver);
 			}
@@ -113,9 +113,13 @@ public class ClientApp {
 	 * @param xPos : x coordinate of the new position of the car
 	 * @param yPos : y coordinate of the new position of the car
 	 * @return list of current cars
+	 * @throws PositionOutOfBoundaries 
 	 */
-	public static String moveCar(String carID,double xPos,double yPos){
-		for(Cars car: Cars.CarList) {
+	public static String moveCar(String carID,double xPos,double yPos) throws PositionOutOfBoundaries{
+		if(xPos>100.0 || xPos<0.0 || yPos>100.0 || yPos<0.0) {
+			throw new PositionOutOfBoundaries("La voiture sort de la ville");
+		}
+		for(Cars car: Cars.carList) {
 			if(car.getCarID().contentEquals(carID)) {
 				double[] coord = {xPos,yPos};
 				car.setCoordGPS(coord);
@@ -129,8 +133,12 @@ public class ClientApp {
 	 * @param xPos : x value of the new position of the car
 	 * @param yPos : y value of the new position of the car
 	 * @return list of current customer
+	 * @throws PositionOutOfBoundaries 
 	 */
-	public static String moveCustomer(String custID,double xPos,double yPos){
+	public static String moveCustomer(String custID,double xPos,double yPos) throws PositionOutOfBoundaries{
+		if(xPos>100.0 || xPos<0.0 || yPos>100.0 || yPos<0.0) {
+			throw new PositionOutOfBoundaries("La voiture sort de la ville");
+		}
 		for(Customer cust: Customer.customerList) {
 			if(cust.getCustID().contentEquals(custID)) {
 				double[] coord = {xPos,yPos};

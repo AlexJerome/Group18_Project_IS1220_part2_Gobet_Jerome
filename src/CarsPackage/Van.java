@@ -12,7 +12,7 @@ import Project.Driver;
  */
 
 public class Van extends Cars {
-	protected static Integer incr =0;
+	public static Integer incr =0;
 	
 	// CONSTRUCTOR :
 	/**
