@@ -65,7 +65,7 @@ public class ClientApp {
 		new Customer(customerName,customerSurname,randomcoord(),48114548);
 		return Customer.displayCustomers();
 	}
-	//TODO : peut etre que le retour doit etre un print plutot qu'un return... ?
+
 	/**
 	 * creation of a driver and a car for this new driver
 	 * @param driverName : driver name
@@ -105,7 +105,20 @@ public class ClientApp {
 	public static String setDriverStatus(String driverName, String driverSurname,String status){
 		for(Driver driver: Driver.driverList) {
 			if(driver.getName().equals(driverName) && driver.getSurname().contentEquals(driverSurname)) {
+				String lastState = driver.getState();
 				driver.setState(status);
+				GregorianCalendar timeLastChange = driver.getDateChangeState();
+				GregorianCalendar timenow = (GregorianCalendar) GregorianCalendar.getInstance();
+				driver.setDateChangeState(timenow);
+				long timeA = timeLastChange.getTimeInMillis();
+				long timeB = timenow.getTimeInMillis();
+				long time = timeB - timeA;
+				switch(lastState) {
+				case("offline"): driver.setTimeOffline(driver.getTimeOffline()+time); break;
+				case("offduty") : driver.setTimeOffDuty(driver.getTimeOffDuty()+time); break;
+				case("onduty") : driver.setTimeOnDuty(driver.getTimeOnDuty()+time); break;
+				case("onaride") : driver.setTimeOnARide(driver.getTimeOnARide()+time); break;
+				}
 			}
 		}
 		return(Driver.displayDrivers());
@@ -184,7 +197,9 @@ public class ClientApp {
 		return(display);
 	}
 	
-	public static void simRide (String customerID, double[][] destination, GregorianCalendar time, String rideType, double driverMark) throws NoDriverAvailable {
+
+	public static String simRide (String customerID, double[] destination, GregorianCalendar time, String rideType, double driverMark) throws NoDriverAvailable {
+		Object[] obj = new Object[] {null,null}; 
 		Customer customer = null;
 		for (Customer cust : Customer.customerList) {
 			if (customerID.equals(cust.getCustID())) {
@@ -192,19 +207,79 @@ public class ClientApp {
 			}
 		}
 		if (rideType.equals("UberX")) {
-			Object[] obj = UberX.findDriver();
+			obj = UberX.findDriver();
 		}
-		if (rideType.equals("UberBlack")) {
-			Object[] obj = UberBlack.findDriver();
+		else if (rideType.equals("UberBlack")) {
+			obj = UberBlack.findDriver();
 		}
-		if (rideType.equals("UberVan")) {
-			Object[] obj = UberVan.findDriver();
+		else if (rideType.equals("UberVan")) {
+			obj = UberVan.findDriver();
 		}
 		if (rideType.equals("UberPool")) {
-			
+			int[] place = UberPoolRequests.addRequest(customer, customer.getCoordGPS(), destination);
+			int i = place[0];
+			int j = place[1];
+			if (i == 0 || i==1) {
+				String display = "Please wait a moment, we are looking for another customer to travel with you in this UberPool ride");
+				return display;
+			}
+			else {
+				obj = UberPoolRequests.fromRequestFindDriver(UberPoolRequests.requestList.get(i));
+			}
+		}
+		Driver driver = (Driver) obj[0];
+		
+		
+	}
+		
+	
+	/**
+	 * to display the drivers in the myUber system in increasing 
+	 * order w.r.t. to the sorting policy 
+	 * @param sortpolicy : either mostappreciated or most occuppied
+	 */
+	public static void displayDrivers(String sortpolicy) {
+		switch(sortpolicy){
+		case("mostappreciated") :{
+			Stats.mostAppreciatedDriver();
+			break;
+		}
+		case("mostoccupied") :{
+			Stats.leastOccupiedDriver();
+			break;
+		}
 		}
 	}
 	
+	/**
+	 *  to display the customers in the myUber system in increasing order w.r.t. to the sorting policy
+	 * @param sortpolicy : either mostfrequent, or mostcharged
+	 */
+	public static void displayCustomers(String sortpolicy) {
+		switch(sortpolicy) {
+		case("mostfrequent"):{
+			Stats.mostFrequentCustomer();
+			break;
+		}
+		case("mostcharged"):{
+			Stats.mostChargedCustomer();
+			break;
+		}
+		}
+	}
+	
+	/**
+	 * total amount cashed by all drivers
+	 * @return total amount
+	 */
+	public static double totalCashed() {
+		return(Stats.totalAmountCharged());
+	}
+	
+
+
+
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		/*
 		Scanner sc = new Scanner(System.in);
