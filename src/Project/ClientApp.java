@@ -124,7 +124,7 @@ public class ClientApp {
 	/**
 	 * move customer with given Id to a given place
 	 * @param custID : id of the customer we want to move
-	 * @param xPos : x value of the new postition of the car
+	 * @param xPos : x value of the new position of the car
 	 * @param yPos : y value of the new position of the car
 	 * @return list of current customer
 	 */
