@@ -37,7 +37,12 @@ public class Driver {
 	/**
 	 * amount cashed by the driver
 	 */
-	private int countMoney;
+	private double countMoney;
+	
+	/**
+	 * amount cashed by the driver
+	 */
+	private int countRides;
 	
 	/**
 	 * appreciation of the driver (note)
@@ -165,7 +170,7 @@ public class Driver {
 	 * get countMoney
 	 * @return countMoney : money cashed by the driver
 	 */
-	public int getCountMoney() {
+	public double getCountMoney() {
 		return countMoney;
 	}
 
@@ -173,10 +178,27 @@ public class Driver {
 	 * set countMoney
 	 * @param countMoney : new amount of money (generally increased)
 	 */
-	public void setCountMoney(int countMoney) {
+	public void setCountMoney(double countMoney) {
 		this.countMoney = countMoney;
 	}
 
+	/**
+	 * get countRides
+	 * @return countRides : rides made by the driver
+	 */
+	public int getCountRides() {
+		return countRides;
+	}
+
+	/**
+	 * set countRides
+	 * @param countRides : new number of rides (generally increased)
+	 */
+	public void setCountRides(int countRides) {
+		this.countRides = countRides;
+	}
+	
+	
 	/**
 	 * get appreciation
 	 * @return : appreciation of the driver

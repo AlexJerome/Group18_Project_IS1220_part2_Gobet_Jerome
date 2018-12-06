@@ -134,7 +134,7 @@ public class UberPoolRequests {
 				boolean driverAvailable = false;
 				Driver driverOnDuty = null;
 				for (Driver driver : car.getOwners()) {
-					if (driver.getState().equals("on-duty")) {
+					if (driver.getState().equals("onduty")) {
 						driverAvailable = true;
 						driverOnDuty = driver;
 					}

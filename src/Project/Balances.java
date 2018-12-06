@@ -3,6 +3,7 @@ package Project;
 import java.util.Date;
 
 import RidesPackage.Rides;
+import RidesPackage.RidesFactory;
 
 public class Balances {
 	
@@ -18,13 +19,13 @@ public class Balances {
 		// number of rides
 		int countRide = 0;
 		for (Rides ride : Rides.rideList) {
-			if (ride.getDriver().getDriverID()==driver.getDriverID() && ride.getStartDate().compareTo(start)>0 && ride.getEndDate().compareTo(end)<0) {
+			if (ride.getDriver().getDriverID()==driver.getDriverID() && ride.getStartDate().after(start) && ride.getEndDate().before(end)) {
 				countRide+=1;
 			}
 		}
 		
 		// money cashed
-		int countMoney = driver.getCountMoney();
+		double countMoney = driver.getCountMoney();
 		
 		// on-duty rate of driving
 		double timeOnARide = driver.getTimeOnARide();
@@ -43,8 +44,8 @@ public class Balances {
 	}
 	
 	public static void systemBalance() {
-		int countAllRides = Rides.getCountAllRides();
-		double countAllPrices = Rides.getCountAllPrices();
+		int countAllRides = RidesFactory.incr;
+		double countAllPrices = RidesFactory.sumPrice;
 		System.out.println("Number of rides = "+countAllRides+", total charges = "+countAllPrices);
 	}
 

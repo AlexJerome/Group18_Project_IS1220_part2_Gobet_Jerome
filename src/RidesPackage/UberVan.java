@@ -51,7 +51,7 @@ public class UberVan extends Rides {
 			for (Cars car : Cars.carList) {
 				if (car instanceof Van && car.getOwners().size()>0) {
 					for (Driver driver : car.getOwners()) {
-						if (driver.getState().equals("on-duty")){
+						if (driver.getState().equals("onduty")){
 							Object[] obj= {driver,car};
 							return obj;
 						}

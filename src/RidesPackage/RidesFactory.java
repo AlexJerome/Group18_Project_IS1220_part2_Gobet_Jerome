@@ -14,11 +14,11 @@ public class RidesFactory {
 	/**
 	 * incrementation to count the number of rides
 	 */
-	static int incr = 0;
+	public static int incr = 0;
 	/**
 	 * sum of the prices of all rides
 	 */
-	static double sumPrice = 0;
+	public static double sumPrice = 0;
 	
 	/**
 	 * average speed with low, medium, and heavy-traffic
@@ -33,7 +33,7 @@ public class RidesFactory {
 	 * @param state : current state of the ride
 	 * @return the created ride
 	 */
-	public static Rides createRide(String rideType, double[] startPoint, double[] destPoint, Customer cust, Driver driver, Cars car, String state, String traffic) {
+	public static Rides createRide(String rideType, double[] startPoint, double[] destPoint, Customer cust, String state, String traffic) {
 		if(rideType == null) {
 			return null;
 		}

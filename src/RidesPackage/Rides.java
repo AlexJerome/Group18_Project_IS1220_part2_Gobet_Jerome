@@ -4,6 +4,7 @@ package RidesPackage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import CarsPackage.Cars;
 import Project.Customer;
@@ -48,12 +49,12 @@ public abstract class Rides {
 	/**
 	 * start date of the ride
 	 */
-	private Date startDate;
+	private GregorianCalendar startDate;
 	
 	/**
 	 * end date of the ride
 	 */
-	private Date endDate;
+	private GregorianCalendar endDate;
 	/**
 	 * state of traffic during the ride
 	 */
@@ -61,12 +62,12 @@ public abstract class Rides {
 	/**
 	 * total number of rides
 	 */
-	private static int countAllRides = 0;
+	public static int countAllRides = 0;
 	
 	/**
 	 * total amount of charges
 	 */
-	private static double countAllPrices = 0.0;
+	public static double countAllPrices = 0.0;
 	
 	/**
 	 * list of rides
@@ -82,25 +83,12 @@ public abstract class Rides {
 	 * @param state : current state of the ride
 	 */
 	
-	@SuppressWarnings("deprecation")
 	public Rides(double[] startPoint, double[] destPoint, Customer cust, String state, String traffic) {
 		this.startPoint = startPoint;
 		this.destPoint = destPoint;
 		this.cust = cust;
 		this.state = state;
 		this.traffic = traffic;
-		/*
-		this.startDate = new Date();
-		//end date
-		double duration = length(startPoint,destPoint)*speed(traffic)*3600;
-		int hour = (int) (duration/3600);
-		int min = (int)((duration-hour*3600)/60);
-		int sec = (int)((duration-hour*3600-min*60));
-		this.endDate=new Date();
-		this.endDate.setHours(startDate.getHours()+hour);
-		this.endDate.setMinutes(startDate.getMinutes()+min);
-		this.endDate.setSeconds(startDate.getSeconds()+sec);
-		*/
 		countAllRides += 1;
 		rideList.add(this);
 	}
@@ -267,7 +255,7 @@ public abstract class Rides {
 	 * get startDate
 	 * @return startDate : start date of the ride
 	 */
-	public Date getStartDate() {
+	public GregorianCalendar getStartDate() {
 		return startDate;
 	}
 
@@ -275,7 +263,7 @@ public abstract class Rides {
 	 * set startDate
 	 * @param startDate : new start date of the ride
 	 */
-	public void setStartDate(Date startDate) {
+	public void setStartDate(GregorianCalendar startDate) {
 		this.startDate = startDate;
 	}
 
@@ -283,7 +271,7 @@ public abstract class Rides {
 	 * get endDate
 	 * @return endDate : end date of the ride
 	 */
-	public Date getEndDate() {
+	public GregorianCalendar getEndDate() {
 		return endDate;
 	}
 
@@ -291,7 +279,7 @@ public abstract class Rides {
 	 * set endDate
 	 * @param endDate : new end date of the ride
 	 */
-	public void setEndDate(Date endDate) {
+	public void setEndDate(GregorianCalendar endDate) {
 		this.endDate = endDate;
 	}
 
@@ -309,35 +297,6 @@ public abstract class Rides {
 	 */
 	public void setTraffic(String traffic) {
 		this.traffic = traffic;
-	}
-
-	/**
-	 * get countAllRides
-	 * @return countAllRides : total number of rides
-	 */
-	public static int getCountAllRides() {
-		return countAllRides;
-	}
-	/**
-	 * set countAllRides
-	 * @param countRides : new number of rides
-	 */
-	public static void setCountAllRides(int countAllRides) {
-		Rides.countAllRides = countAllRides;
-	}
-	/**
-	 * get countAllPrices
-	 * @return countAllPrices : total amount of charges
-	 */
-	public static double getCountAllPrices() {
-		return countAllPrices;
-	}
-	/**
-	 * set countAllPrices
-	 * @param countAllPrices : new total amount of charges
-	 */
-	public static void setCountAllPrices(double countAllPrices) {
-		Rides.countAllPrices = countAllPrices;
 	}
 	
 	// TO STRING METHODS:

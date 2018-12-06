@@ -1,7 +1,5 @@
 package Project;
 
-import java.util.Scanner;
-
 import CarsPackage.Berline;
 import CarsPackage.Cars;
 import CarsPackage.CarsFactory;
@@ -20,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Scanner;
 import java.time.LocalTime;
 
 /**
@@ -168,7 +167,7 @@ public class ClientApp {
 	/**
 	 * display state of all the system
 	 */
-	public static void display() {
+	public static void displayState() {
 		System.out.println(Driver.displayDrivers());
 		System.out.println(Customer.displayCustomers());
 		System.out.println(Cars.displayCars());
@@ -198,40 +197,178 @@ public class ClientApp {
 	}
 	
 
-	public static String simRide (String customerID, double[] destination, GregorianCalendar time, String rideType, double driverMark) throws NoDriverAvailable {
-		Object[] obj = new Object[] {null,null}; 
+	public static String simRide (String customerID, double[] destination, GregorianCalendar time, String rideType, double driverMark) throws NoDriverAvailable, PositionOutOfBoundaries {
 		Customer customer = null;
 		for (Customer cust : Customer.customerList) {
 			if (customerID.equals(cust.getCustID())) {
 				customer = cust;
 			}
 		}
+		// traffic
+		String traffic = RidesFactory.stateOfTraffic(time.HOUR);
+		// Create Ride
+		Rides ride = RidesFactory.createRide(rideType, customer.getCoordGPS(), destination, customer, "unconfirmed", traffic);
+		// Find Car and Driver
+		Object[] obj = new Object[] {null,null}; 
+		int num = 0; // useful to compute price just after
 		if (rideType.equals("UberX")) {
 			obj = UberX.findDriver();
+			ride.setState("confirmed");
+			num = 0;
 		}
 		else if (rideType.equals("UberBlack")) {
 			obj = UberBlack.findDriver();
+			ride.setState("confirmed");
+			num = 1;
 		}
 		else if (rideType.equals("UberVan")) {
 			obj = UberVan.findDriver();
+			ride.setState("confirmed");
+			num = 3;
 		}
 		if (rideType.equals("UberPool")) {
 			int[] place = UberPoolRequests.addRequest(customer, customer.getCoordGPS(), destination);
 			int i = place[0];
 			int j = place[1];
 			if (i == 0 || i==1) {
-				String display = "Please wait a moment, we are looking for another customer to travel with you in this UberPool ride");
+				String display = "Please wait a moment, we are looking for another customer to travel with you in this UberPool ride";
 				return display;
 			}
 			else {
 				obj = UberPoolRequests.fromRequestFindDriver(UberPoolRequests.requestList.get(i));
+				ride.setState("confirmed");
 			}
+			num = 2;
 		}
 		Driver driver = (Driver) obj[0];
-		
-		
+		Cars car = (Cars) obj[1];
+		ride.setState("ongoing");
+		// price
+		double length = Rides.length(customer.getCoordGPS(),destination);
+		double[] prices = RidesFactory.evaluatePrices(traffic,length);
+		double price = prices[num];
+		//times
+		GregorianCalendar timeDeparture = time;
+		GregorianCalendar timeArrival = time;
+		int duration = (int) (Rides.length(customer.getCoordGPS(),destination)*Rides.speed(traffic)*3600);
+		timeArrival.add(GregorianCalendar.SECOND,duration);
+		// update Ride's features
+		ride.setStartDate(timeDeparture);
+		ride.setEndDate(timeArrival);
+		RidesFactory.sumPrice += price;
+		// update Driver's features
+		setDriverStatus(driver.getName(),driver.getSurname(),"onaride");
+		driver.setCountMoney(driver.getCountMoney()+price);
+		driver.setCountRides(driver.getCountRides()+1);
+		// update Customer's features
+		customer.setCountPrice(customer.getCountPrice()+price);
+		customer.setCountTimeSpent(customer.getCountTimeSpent()+duration);
+		customer.setCountRides(customer.getCountRides()+1);
+		moveCustomer(customerID,destination[0],destination[1]);
+		// update Car's features
+		moveCar(car.getCarID(),destination[0],destination[1]);
+		// return
+		driver.setAppreciation((driver.getAppreciation()*(driver.getCountRides()-1)+driverMark)/driver.getCountRides());
+		ride.setState("completed");
+		setDriverStatus(driver.getName(),driver.getSurname(),"onduty");
+		String display = "The driver "+driver.getDriverID()+" drives the customer "+customerID+" with the car "+car.getCarID()+". The departure is at "+timeDeparture+" and the arrival at "+timeArrival+". The cost of the ride is "+price;		
+		return(display);
 	}
 		
+	
+	public static String simRide_i (String customerID, double[] destination, GregorianCalendar time) throws PositionOutOfBoundaries, NoDriverAvailable {
+		Scanner sc =  new Scanner(System.in);
+		Customer customer = null;
+		for (Customer cust : Customer.customerList) {
+			if (customerID.equals(cust.getCustID())) {
+				customer = cust;
+			}
+		}
+		
+		// output-step1
+		System.out.println(ask4price(customerID, destination, time));
+		
+		// input-step2
+		System.out.println("Which type of ride do you want ?");
+		String rideType = sc.nextLine();
+		
+		// output-step3
+		// traffic
+		String traffic = RidesFactory.stateOfTraffic(time.HOUR);
+		// Create Ride
+		Rides ride = RidesFactory.createRide(rideType, customer.getCoordGPS(), destination, customer, "unconfirmed", traffic);
+		// Find Car and Driver
+		Object[] obj = new Object[] {null,null}; 
+		int num = 0; // useful to compute price just after
+		if (rideType.equals("UberX")) {
+			obj = UberX.findDriver();
+			ride.setState("confirmed");
+			num = 0;
+		}
+		else if (rideType.equals("UberBlack")) {
+			obj = UberBlack.findDriver();
+			ride.setState("confirmed");
+			num = 1;
+		}
+		else if (rideType.equals("UberVan")) {
+			obj = UberVan.findDriver();
+			ride.setState("confirmed");
+			num = 3;
+		}
+		if (rideType.equals("UberPool")) {
+			int[] place = UberPoolRequests.addRequest(customer, customer.getCoordGPS(), destination);
+			int i = place[0];
+			int j = place[1];
+			if (i == 0 || i==1) {
+				String display = "Please wait a moment, we are looking for another customer to travel with you in this UberPool ride";
+				return display;
+			}
+			else {
+				obj = UberPoolRequests.fromRequestFindDriver(UberPoolRequests.requestList.get(i));
+				ride.setState("confirmed");
+			}
+			num = 2;
+		}
+		Driver driver = (Driver) obj[0];
+		Cars car = (Cars) obj[1];
+		ride.setState("ongoing");
+		// price
+		double length = Rides.length(customer.getCoordGPS(),destination);
+		double[] prices = RidesFactory.evaluatePrices(traffic,length);
+		double price = prices[num];
+		//times
+		GregorianCalendar timeDeparture = time;
+		GregorianCalendar timeArrival = time;
+		int duration = (int) (Rides.length(customer.getCoordGPS(),destination)*Rides.speed(traffic)*3600);
+		timeArrival.add(GregorianCalendar.SECOND,duration);
+		// update Ride's features
+		ride.setStartDate(timeDeparture);
+		ride.setEndDate(timeArrival);
+		RidesFactory.sumPrice += price;
+		// update Driver's features
+		setDriverStatus(driver.getName(),driver.getSurname(),"onaride");
+		driver.setCountMoney(driver.getCountMoney()+price);
+		driver.setCountRides(driver.getCountRides()+1);
+		// update Customer's features
+		customer.setCountPrice(customer.getCountPrice()+price);
+		customer.setCountTimeSpent(customer.getCountTimeSpent()+duration);
+		customer.setCountRides(customer.getCountRides()+1);
+		moveCustomer(customerID,destination[0],destination[1]);
+		// update Car's features
+		moveCar(car.getCarID(),destination[0],destination[1]);
+		// end of the ride
+		ride.setState("completed");
+		System.out.println("The driver "+driver.getDriverID()+" drives the customer "+customerID+" with the car "+car.getCarID()+". The departure is at "+timeDeparture+" and the arrival at "+timeArrival+". The cost of the ride is "+price);	
+		
+		// input-step3
+		System.out.println("Give a mark to evaluate the driver");
+		double driverMark = sc.nextDouble();
+		driver.setAppreciation((driver.getAppreciation()*(driver.getCountRides()-1)+driverMark)/driver.getCountRides());
+		// final-output
+		displayState();
+		return("");
+	}
+	
 	
 	/**
 	 * to display the drivers in the myUber system in increasing 
@@ -274,124 +411,6 @@ public class ClientApp {
 	 */
 	public static double totalCashed() {
 		return(Stats.totalAmountCharged());
-	}
-	
-
-
-
-	@SuppressWarnings("deprecation")
-	public static void main(String[] args) {
-		/*
-		Scanner sc = new Scanner(System.in);
-		
-		// name
-		System.out.println("Please enter your name :");
-		String name = sc.nextLine();
-		
-		// surname
-		System.out.println("Please enter your surname :");
-		String surname = sc.nextLine();
-		
-		// startPoint
-		System.out.println("Please enter your latitude in degrees :");
-		double start_lat = sc.nextDouble();
-		System.out.println("Please enter your longitude in degrees :");
-		double start_lon = sc.nextDouble();
-		double[] startPoint = new double[]{start_lat,start_lon};
-		
-		// creditCardNb
-		System.out.println("Please enter your credit card number :");
-		long creditCardNb = sc.nextLong();
-		// construction of customer
-		Customer cust = new Customer(name,surname,startPoint,creditCardNb);
-		
-		// destPoint
-		System.out.println("Where do you want to go (latitude in degrees) ?");
-		double dest_lat = sc.nextDouble();
-		System.out.println("Where do you want to go (longitude in degrees) ?");
-		double dest_lon = sc.nextDouble();
-		double[] destPoint = new double[]{dest_lat,dest_lon};
-		
-		// length
-		double length = Rides.length(startPoint, destPoint);
-		System.out.println("The length of the ride is "+length+"km.");
-		// TO DO : truncate length
-		
-		// computation of prices
-		int hour = LocalTime.now().getHour();
-		String traffic = RidesFactory.stateOfTraffic(hour);
-		System.out.println("The traffic is "+traffic);
-		double[] prices = RidesFactory.evaluatePrices(traffic,length);
-		
-		// calculation of prices
-		// TO DO : truncate prices
-		int standardIncr = CarsFactory.getStandardIncr();
-		int berlineIncr = CarsFactory.getBerlineIncr();
-		int vanIncr = CarsFactory.getVanIncr();
-		if (standardIncr>0) {
-			System.out.println("The price for an UberX ride is "+prices[0]+"€.");
-			System.out.println("The price for an UberPool ride is "+prices[2]+"€.");
-		}
-			
-		if (berlineIncr>0) {
-			System.out.println("The price for an UberBlack ride is "+prices[1]+"€.");
-		}
-		if (vanIncr>0) {
-			System.out.println("The price for an UberVan ride is "+prices[3]+"€.");
-		}
-		
-		// choice of the ride
-		System.out.println("Please choose the ride you prefer among those above :");
-		String rideType = sc.nextLine();
-		
-		// construction of the ride
-		RidesFactory.createRide(rideType,startPoint,destPoint,cust,"unconfirmed");
-		
-		// answer of the driver
-		int N = 0;
-		String typeCar = new String();
-		if (rideType.equalsIgnoreCase("UberX")) {
-			typeCar="Standard";
-			N = standardIncr;
-		}
-		if (rideType.equalsIgnoreCase("UberPool")) {
-			typeCar="Standard";
-			N = standardIncr;
-		}
-		if (rideType.equalsIgnoreCase("UberBlack")) {
-			typeCar="Berline";
-			N = berlineIncr;
-		}
-		if (rideType.equalsIgnoreCase("UberVan")) {
-			typeCar="Van";
-			N = vanIncr;
-		}
-		/*
-		boolean waiting = true;
-		int i = 1;
-		while (waiting && i<=N) {
-			String ID=typeCar+Integer.toString(N);
-			// Ask if a driver of the car named 'ID' is available
-		}
-		
-		// TO BE COMPLETED
-		
-		sc.close();
-		
-		Driver driver = new Driver ("John","Johnny");
-		System.out.println("His name is "+driver.getName()+", and his surname is "+driver.getSurname());
-		
-		Date aujourdhui = new Date();
-		System.out.println(aujourdhui.getHours());
-		System.out.println(aujourdhui.getMinutes());
-		System.out.println(aujourdhui.getSeconds());
-		double duration = 4569;
-		int hour = (int) (duration/3600);
-		int min = (int)((duration-hour*3600)/60);
-		int sec = (int)((duration-hour*3600-min*60));
-		System.out.println(hour+" "+min+" "+sec);
-		*/
-
 	}
 }
 
