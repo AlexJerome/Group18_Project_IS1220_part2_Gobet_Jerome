@@ -270,4 +270,25 @@ public class Driver {
 	public void setDateChangeState(Date dateChangeState) {
 		this.dateChangeState = dateChangeState;
 	}
+
+	//TOSTRING METHODS :
+
+	@Override
+	public String toString() {
+		return "Driver : [Name= " + name + ", Surname= " + surname + ", driverID=" + driverID + ", Current state= " + state
+				+ ", Appreciation=" + appreciation + "]";
+	}
+	
+	/**
+	 * display list and state of all drivers
+	 * @return : list of all current drivers with their informations
+	 */
+	public static String displayDrivers() {
+		String display = "List of Drivers: \n ";
+		for(Driver driver: driverList) {
+			display += driver.toString() + "\n";
+		}
+		return(display);
+				
+	}
 }

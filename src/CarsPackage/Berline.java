@@ -27,13 +27,23 @@ public class Berline extends Cars {
 	}
 
 	// METHOD :
+	/**
+	 * create n cars of type Berline, with 
+	 * @param n : number of Berline cars to be created
+	 */
 	public static void setupCars(int n) {
 		for(int i=0;i<n;i++) {
 			incr+=1;
 			ArrayList<Driver> owner = new ArrayList<Driver>();
-			owner.add(new Driver("driver"+i+"name","driver"+i+"surname"));
+			owner.add(new Driver("driver"+Driver.getIncr()+"name","driver"+Driver.getIncr()+"surname"));
 			new Berline(owner,4,"Berline"+incr.toString(),ClientApp.randomcoord());
 		}
+	}
+	
+	//TOSTRING :
+	@Override
+	public String toString() {
+		return "Berline Car : " + super.toString();
 	}
 }
 

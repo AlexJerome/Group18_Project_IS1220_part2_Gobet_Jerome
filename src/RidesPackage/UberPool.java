@@ -39,5 +39,10 @@ public class UberPool extends Rides {
 		return(Rides.trafficRate(traffic, trafficRates)*length*Rides.basicRate(length, basicRates));
 	}
 
+	//TOSTRING :
+	@Override
+	public String toString() {
+		return "UberPool Ride : " +super.toString();
+	}
 
 }
