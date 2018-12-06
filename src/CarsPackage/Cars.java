@@ -2,6 +2,7 @@ package CarsPackage;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Project.Driver;
 /**
@@ -95,6 +96,30 @@ public abstract class Cars {
 	 */
 	public void setCoordGPS(double[] coordGPS) {
 		this.coordGPS = coordGPS;
+	}
+
+
+	
+	//TO STRING METHODS :
+
+	/**
+	 * display the state of one car
+	 */
+	@Override
+	public String toString() {
+		return " [owners=" + owners + ", nbSeats=" + nbSeats + ", carID=" + carID + ", coordGPS="
+				+ Arrays.toString(coordGPS) + "]";
+	}
+	/**
+	 * display state of all current cars
+	 * @return : string with all information about the cars
+	 */
+	public static String displayCars() {
+		String display = "";
+		for(Cars car: CarList) {
+			display += car.toString()+"\n";
+		}
+		return(display);
 	}
 }
 

@@ -35,5 +35,11 @@ public class Berline extends Cars {
 			new Berline(owner,4,"Berline"+incr.toString(),ClientApp.randomcoord());
 		}
 	}
+	
+	//TOSTRING :
+	@Override
+	public String toString() {
+		return "Berline Car : " + super.toString();
+	}
 }
 

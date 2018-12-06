@@ -37,6 +37,12 @@ public class UberX extends Rides {
 	public static double evaluatePrice(String traffic, double length) {
 		return(Rides.trafficRate(traffic, trafficRates)*length*Rides.basicRate(length, basicRates));
 	}
+	
+	//TOSTRING :
+	@Override
+	public String toString() {
+		return "UberX Ride : " + super.toString();
+	}
 
 }
 

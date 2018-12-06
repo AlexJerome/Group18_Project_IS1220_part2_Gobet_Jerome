@@ -36,4 +36,9 @@ public class Van extends Cars {
 		}
 	}
 
+	//TO STRING :
+	@Override
+	public String toString() {
+		return "Van Car :" +super.toString();
+	}
 }

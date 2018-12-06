@@ -4,6 +4,7 @@
 package Project;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * class representing customers (people who can book a ride)
@@ -214,5 +215,24 @@ public class Customer {
 	 */
 	public static int getIncr() {
 		return incr;
+	}
+
+	//TOSTRING :
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Customer [name=" + name + ", surname=" + surname + ", custID=" + custID + ", coordGPS="
+				+ Arrays.toString(coordGPS) + ", creditCardNb=" + creditCardNb + ", msgBox=" + msgBox + ", countRides="
+				+ countRides + ", countTimeSpent=" + countTimeSpent + ", countPrice=" + countPrice + "]";
+	}
+	
+	public static String displayCustomers() {
+		String display = "List of customers : \n";
+		for(Customer cust : customerList) {
+			display+=cust.toString() + "\n";
+		}
+		return(display);
 	}
 }

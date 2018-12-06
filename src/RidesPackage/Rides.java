@@ -2,6 +2,7 @@ package RidesPackage;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import CarsPackage.Cars;
@@ -14,7 +15,7 @@ import Project.Driver;
 	 */
 
 public abstract class Rides {
-	 /** 
+	/** 
 	  * starting point of the ride : GPS coordinate {latitude,longitude}
 	  */
 	private double[] startPoint;
@@ -341,6 +342,26 @@ public abstract class Rides {
 	 */
 	public static void setCountAllPrices(double countAllPrices) {
 		Rides.countAllPrices = countAllPrices;
+	}
+	
+	// TO STRING METHODS:
+	@Override
+	public String toString() {
+		return "[startPoint=" + Arrays.toString(startPoint) + ", destPoint=" + Arrays.toString(destPoint)
+				+ ", cust=" + cust + ", driver=" + driver + ", car=" + car + ", state=" + state + ", startDate="
+				+ startDate + ", endDate=" + endDate + ", traffic=" + traffic + "]";
+	}
+	
+	/**
+	 * display the current state of all rides
+	 * @return : string with informations about the current state of all rides
+	 */
+	public static String displayRides() {
+		String display = "List of rides : \n";
+		for(Rides rides: rideList) {
+			display+= rides.toString()+"\n";
+		}
+		return(display);
 	}
 }
 

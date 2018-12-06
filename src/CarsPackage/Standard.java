@@ -36,5 +36,9 @@ public class Standard extends Cars {
 			new Standard(owner,4,"Standard"+incr.toString(),ClientApp.randomcoord());
 		}
 	}
-	
+	//TOSTRING :
+	@Override
+	public String toString() {
+		return "Standard Car :" + super.toString();
+	}
 }

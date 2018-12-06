@@ -66,7 +66,7 @@ public class ClientApp {
 	public static ArrayList<Driver> addCarDriver(String driverName,String driverSurname,String carType){
 		ArrayList<Driver> owners = new ArrayList<Driver>();
 		owners.add(new Driver(driverName,driverSurname));
-		Cars car = CarsFactory.createCar(carType, owners, randomcoord());	
+		CarsFactory.createCar(carType, owners, randomcoord());	
 		return(Driver.driverList);
 	}
 	/**
@@ -85,11 +85,54 @@ public class ClientApp {
 		}
 		return(Driver.driverList);
 	}
-	
+	/**
+	 * set the status of a driver with given surname and name to status
+	 * @param driverName : name of the driver we want to modify the status
+	 * @param driverSurname : surname of the driver we sant to modify the status
+	 * @param status : new state of the driver
+	 * @return list of drivers
+	 */
 	public static ArrayList<Driver> setDriverStatus(String driverName, String driverSurname,String status){
-		for(Driver driver)
+		for(Driver driver: Driver.driverList) {
+			if(driver.getName().equals(driverName) && driver.getSurname().contentEquals(driverSurname)) {
+				driver.setState(status);
+			}
+		}
+		return(Driver.driverList);
 	}
 	
+	/**
+	 * move a car with given ID to the given position
+	 * @param carID : carID of the car we want to move
+	 * @param xPos : x coordinate of the new position of the car
+	 * @param yPos : y coordinate of the new position of the car
+	 * @return list of current cars
+	 */
+	public static ArrayList<Cars> moveCar(String carID,double xPos,double yPos){
+		for(Cars car: Cars.CarList) {
+			if(car.getCarID().contentEquals(carID)) {
+				double[] coord = {xPos,yPos};
+				car.setCoordGPS(coord);
+			}
+		}
+		return(Cars.CarList);
+	}
+	/**
+	 * move customer with given Id to a given place
+	 * @param custID : id of the customer we want to move
+	 * @param xPos : x value of the new postition of the car
+	 * @param yPos : y value of the new position of the car
+	 * @return list of current customer
+	 */
+	public static ArrayList<Customer> moveCustomer(String custID,double xPos,double yPos){
+		for(Customer cust: Customer.customerList) {
+			if(cust.getCustID().contentEquals(custID)) {
+				double[] coord = {xPos,yPos};
+				cust.setCoordGPS(coord);
+			}
+		}
+		return(Customer.customerList);
+	}
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		/*
