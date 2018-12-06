@@ -43,7 +43,7 @@ public class UberX extends Rides {
 		return(Rides.trafficRate(traffic, trafficRates)*length*Rides.basicRate(length, basicRates));
 	}
 	
-	public static Object[] findDriver (double[] startPoint, double[] destPoint) throws NoDriverAvailable {
+	public static Object[] findDriver () throws NoDriverAvailable {
 		if (Cars.carList.size()==0) {
 			throw new NoDriverAvailable("No Car available for your UberX ride");
 		}

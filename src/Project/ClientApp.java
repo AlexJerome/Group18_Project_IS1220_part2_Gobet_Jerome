@@ -9,8 +9,12 @@ import CarsPackage.Standard;
 import CarsPackage.Van;
 
 import RidesPackage.UberPoolRequests;
+import RidesPackage.UberVan;
+import RidesPackage.UberX;
+import RidesPackage.NoDriverAvailable;
 import RidesPackage.Rides;
 import RidesPackage.RidesFactory;
+import RidesPackage.UberBlack;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -180,7 +184,27 @@ public class ClientApp {
 		return(display);
 	}
 	
-	@SuppressWarnings("deprecation")
+	public static void simRide (String customerID, double[][] destination, GregorianCalendar time, String rideType, double driverMark) throws NoDriverAvailable {
+		Customer customer = null;
+		for (Customer cust : Customer.customerList) {
+			if (customerID.equals(cust.getCustID())) {
+				customer = cust;
+			}
+		}
+		if (rideType.equals("UberX")) {
+			Object[] obj = UberX.findDriver();
+		}
+		if (rideType.equals("UberBlack")) {
+			Object[] obj = UberBlack.findDriver();
+		}
+		if (rideType.equals("UberVan")) {
+			Object[] obj = UberVan.findDriver();
+		}
+		if (rideType.equals("UberPool")) {
+			
+		}
+	}
+	
 	public static void main(String[] args) {
 		/*
 		Scanner sc = new Scanner(System.in);

@@ -32,18 +32,20 @@ public class UberPoolRequests {
 	private Request request3;
 	private int nbRequest;
 	
-	private static ArrayList<UberPoolRequests> requestList= new ArrayList<UberPoolRequests>();
+	public static ArrayList<UberPoolRequests> requestList= new ArrayList<UberPoolRequests>();
 	
 	public UberPoolRequests (Request request1) {
 		this.request1 = request1;
 		this.nbRequest=1;
 	}
 	
-	public static void addRequest(Customer customer, double[] startPoint, double[] destPoint) {
+	public static int[] addRequest(Customer customer, double[] startPoint, double[] destPoint) {
 		Request request = new Request(customer,startPoint,destPoint);
+		int[] result = new int[] {0,0};
 		if (requestList.size()==0) {
 			UberPoolRequests u = new UberPoolRequests(request);
 			requestList.add(u);
+			return result;
 		}
 		else {
 			int i = 0;
@@ -53,16 +55,26 @@ public class UberPoolRequests {
 			if (i==requestList.size()) {
 				UberPoolRequests u = new UberPoolRequests(request);
 				requestList.add(u);
+				result[0] = requestList.size()-1;
+				result[1] = 0;
+				return result;
 			}
 			else if (requestList.get(i).getNbRequest()==1) {
 				requestList.get(i).request2 = request;
 				requestList.get(i).setNbRequest(2);
+				result[0] = i;
+				result[1] = 1;
+				return result;
 				}
 			else if (requestList.get(i).getNbRequest()==2) {
-					requestList.get(i).request2 = request;
-					requestList.get(i).setNbRequest(3);
+				requestList.get(i).request2 = request;
+				requestList.get(i).setNbRequest(3);
+				result[0] = i;
+				result[1] = 2;
+				return result;
 			}
 		}
+		return result;
 	}
 	
 	public static int closestNeighbor(double[] c, ArrayList<double[]> neighbors) {
@@ -196,19 +208,5 @@ public class UberPoolRequests {
 	 */
 	public void setNbRequest(int nbRequest) {
 		this.nbRequest = nbRequest;
-	}
-
-	/**
-	 * @return the requestList
-	 */
-	public ArrayList<UberPoolRequests> getRequestList() {
-		return requestList;
-	}
-
-	/**
-	 * @param requestList the requestList to set
-	 */
-	public void setRequestList(ArrayList<UberPoolRequests> requestList) {
-		this.requestList = requestList;
 	}
 }
