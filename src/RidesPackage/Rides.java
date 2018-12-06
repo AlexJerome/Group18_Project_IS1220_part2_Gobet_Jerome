@@ -175,20 +175,20 @@ public abstract class Rides {
 		}
 	}
 	
-	public Driver findDriver (String rideType, Customer cust, double[] startPoint, double[] destPoint) {
+	/*public static Object[] findDriver (String rideType, Customer cust, double[] startPoint, double[] destPoint) throws NoDriverAvailable {
 		if (rideType.equals("UberX")) {
-			return UberX.findDriver(double[] startPoint, double[] destPoint);
+			return UberX.findDriver(startPoint,destPoint);
 		}
 		else if (rideType.equals("UberBlack")) {
-			return UberBlack.findDriver(double[] startPoint, double[] destPoint);
+			return UberBlack.findDriver(startPoint,destPoint);
 		}
 		else if (rideType.equals("UberVan")) {
-			return UberVan.findDriver(double[] startPoint, double[] destPoint);
+			return UberVan.findDriver(startPoint,destPoint);
 		}
-		else if if (rideType.equals("UberPool")) {
-			return UberPool.findDriver(Customer cust, double[] startPoint, double[] destPoint);
+		else {
+			return UberPool.findDriver(cust,startPoint,destPoint);
 		}
-	}
+	}*/
 	
 	// GETTERS AND SETTERS :
 	/**

@@ -5,7 +5,10 @@ package RidesPackage;
 
 import java.util.ArrayList;
 
+import CarsPackage.Cars;
+import CarsPackage.Standard;
 import Project.Customer;
+import Project.Driver;
 
 /**
  * @author mariongobet
@@ -13,7 +16,7 @@ import Project.Customer;
  */
 public class UberPoolRequests {
 	
-	class Request {
+	static class Request {
 		private Customer customer;
 		private double[] startPoint;
 		private double[] destPoint;
@@ -29,14 +32,15 @@ public class UberPoolRequests {
 	private Request request3;
 	private int nbRequest;
 	
-	private ArrayList<UberPoolRequests> requestList= new ArrayList<UberPoolRequests>();
+	private static ArrayList<UberPoolRequests> requestList= new ArrayList<UberPoolRequests>();
 	
 	public UberPoolRequests (Request request1) {
 		this.request1 = request1;
 		this.nbRequest=1;
 	}
 	
-	public void addRequest(Request request) {
+	public static void addRequest(Customer customer, double[] startPoint, double[] destPoint) {
+		Request request = new Request(customer,startPoint,destPoint);
 		if (requestList.size()==0) {
 			UberPoolRequests u = new UberPoolRequests(request);
 			requestList.add(u);
@@ -102,6 +106,42 @@ public class UberPoolRequests {
 		return totalLength;
 	}
 
+		
+	public static Object[] fromRequestFindDriver(UberPoolRequests u) {
+		double p1[] = u.getRequest1().startPoint;
+		double d1[] = u.getRequest1().destPoint;
+		double p2[] = u.getRequest2().startPoint;
+		double d2[] = u.getRequest2().destPoint;
+		double p3[] = u.getRequest3().startPoint;
+		double d3[] = u.getRequest3().destPoint;
+		double min = Float.POSITIVE_INFINITY;
+		Standard carChosen = null;
+		Driver driverChosen = null;
+		for (Cars car : Cars.carList) {
+			if (car instanceof Standard) {
+				boolean driverAvailable = false;
+				Driver driverOnDuty = null;
+				for (Driver driver : car.getOwners()) {
+					if (driver.getState().equals("on-duty")) {
+						driverAvailable = true;
+						driverOnDuty = driver;
+					}
+				}
+				if (driverAvailable) {
+					double[] c = car.getCoordGPS();
+					double cost = pickUpDropOff(c,p1,p2,p3,d1,d2,d3);
+					if (cost<min) {
+						min = cost;
+						carChosen = (Standard) car;
+						driverChosen = driverOnDuty;
+					}
+				}
+			}
+		}
+		Object[] obj = {driverChosen,carChosen};
+		return obj;
+	}
+	
 	/**
 	 * @return the request1
 	 */

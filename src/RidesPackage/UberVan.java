@@ -1,6 +1,11 @@
 package RidesPackage;
 
+import java.util.Scanner;
+
+import CarsPackage.Cars;
+import CarsPackage.Van;
 import Project.Customer;
+import Project.Driver;
 
 /**
  * class representing the type of ride UberVan
@@ -36,6 +41,25 @@ public class UberVan extends Rides {
 	 */
 	public static double evaluatePrice(String traffic, double length) {
 		return(Rides.trafficRate(traffic, trafficRates)*length*Rides.basicRate(length, basicRates));
+	}
+	
+	public static Object[] findDriver (double[] startPoint, double[] destPoint) throws NoDriverAvailable {
+		if (Cars.carList.size()==0) {
+			throw new NoDriverAvailable("No Car available for your UberVan ride");
+		}
+		else {
+			for (Cars car : Cars.carList) {
+				if (car instanceof Van && car.getOwners().size()>0) {
+					for (Driver driver : car.getOwners()) {
+						if (driver.getState().equals("on-duty")){
+							Object[] obj= {driver,car};
+							return obj;
+						}
+					}
+				}
+			}
+		throw new NoDriverAvailable("None Driver available for your UberVan ride");
+		}
 	}
 	
 	//TOSTRING :

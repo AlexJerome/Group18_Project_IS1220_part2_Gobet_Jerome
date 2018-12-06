@@ -2,6 +2,8 @@ package RidesPackage;
 
 import java.util.Scanner;
 
+import CarsPackage.Berline;
+import CarsPackage.Cars;
 import Project.Customer;
 import Project.Driver;
 
@@ -41,22 +43,22 @@ public class UberBlack extends Rides {
 		return(Rides.trafficRate(traffic, trafficRates)*length*Rides.basicRate(length, basicRates));
 	}
 	
-	public Driver findDriver (double[] startPoint, double[] destPoint) throws NoDriverAvailable {
-		Scanner sc = new Scanner(System.in);
-		if (Driver.driverList.size()==0) {
-			throw new NoDriverAvailable("No Driver available for your UberBlack ride");
+	public static Object[] findDriver (double[] startPoint, double[] destPoint) throws NoDriverAvailable {
+		if (Cars.carList.size()==0) {
+			throw new NoDriverAvailable("No Car available for your UberBlack ride");
 		}
 		else {
-			for (Driver driver : Driver.driverList) {
-				if (driver.getState().equals("on-duty")){
-					System.out.println("Do you want to drive a passenger from "+startPoint+" to "+destPoint+"? (yes/no)");
-					String answer = sc.nextLine();
-					if (answer.equals("yes")) {
-						return driver;
+			for (Cars car : Cars.carList) {
+				if (car instanceof Berline && car.getOwners().size()>0) {
+					for (Driver driver : car.getOwners()) {
+						if (driver.getState().equals("on-duty")){
+							Object[] obj= {driver,car};
+							return obj;
+						}
 					}
 				}
 			}
-		throw new NoDriverAvailable("None of drivers accepted your UberBlack ride");
+		throw new NoDriverAvailable("None Driver available for your UberBlack ride");
 		}
 	}
 	
