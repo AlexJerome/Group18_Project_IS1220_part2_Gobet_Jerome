@@ -307,6 +307,9 @@ public abstract class Rides {
 		for(Rides rides: rideList) {
 			display+= rides.toString()+"\n";
 		}
+		if(rideList.size()==0) {
+			display+="no ride for now";
+		}
 		return(display);
 	}
 }

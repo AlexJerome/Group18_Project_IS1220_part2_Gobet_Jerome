@@ -413,7 +413,5 @@ public class ClientApp {
 		return(Stats.totalAmountCharged());
 	}
 	
-	public static void main(String[] args) {
-	}
 }
 
