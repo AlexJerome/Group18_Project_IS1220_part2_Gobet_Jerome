@@ -13,19 +13,19 @@ public abstract class Cars {
 	/**
 	 * list of the car's drivers
 	 */
-	protected ArrayList<Driver> owners;
+	private ArrayList<Driver> owners;
 	/**
 	 * number of seats excluding driver
 	 */
-	protected int nbSeats;
+	private int nbSeats;
 	/**
 	 * ID of the car (in the form : "StandardN" or "VanN" or "BerlineN", where N is an unique id for each type of car)
 	 */
-	protected String carID;
+	private String carID;
 	/**
 	 * position of the car in degrees (GPS coordinates {latitude,longitude})
 	 */
-	protected double[] coordGPS;
+	private double[] coordGPS;
 	/**
 	 * list of cars
 	 */

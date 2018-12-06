@@ -12,7 +12,7 @@ import Project.Driver;
  */
 
 public class Berline extends Cars {
-	protected static Integer incr =0;
+	private static Integer incr =0;
 	
 	// CONSTRUCTOR :
 	/**
