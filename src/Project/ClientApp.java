@@ -10,6 +10,7 @@ import CarsPackage.Van;
 
 import RidesPackage.UberPoolRequests;
 import RidesPackage.Rides;
+import RidesPackage.RidesFactory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -111,7 +112,7 @@ public class ClientApp {
 	 * @param yPos : y coordinate of the new position of the car
 	 * @return list of current cars
 	 */
-	public static ArrayList<Cars> moveCar(String carID,double xPos,double yPos){
+	public static String moveCar(String carID,double xPos,double yPos){
 		for(Cars car: Cars.CarList) {
 			if(car.getCarID().contentEquals(carID)) {
 				double[] coord = {xPos,yPos};
@@ -145,6 +146,11 @@ public class ClientApp {
 		System.out.println(Customer.displayCustomers());
 		System.out.println(Cars.displayCars());
 		System.out.println(Rides.displayRides());
+	}
+	
+	public static void ask4price(String customerID, double[] destination,Date time) {
+		String trafficState = RidesFactory.stateOfTraffic(time.getHours());
+		
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -258,6 +264,7 @@ public class ClientApp {
 		int min = (int)((duration-hour*3600)/60);
 		int sec = (int)((duration-hour*3600-min*60));
 		System.out.println(hour+" "+min+" "+sec);
+		*/
 
 	}
 }
